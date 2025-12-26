@@ -1,0 +1,4 @@
+name: STVchat
+version: '1.0-SNAPSHOT'
+main: net.maksim6opka.sTVchat.STVchat
+api-version: '1.21'
