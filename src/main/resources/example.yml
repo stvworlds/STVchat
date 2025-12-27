@@ -1,0 +1,132 @@
+
+# Этот чат недописанный и поломанный, сами исправляйте мне лень,
+# если вы будете брать за основу этот код, то добавляйте меня в со-авторы.
+
+# Доступные шорткаты из коробки: ^dice ^8ball ^roll ^roll:ЧИСЛО ^loc
+
+ChatHandler:
+  type: world
+  debug: false
+  # Плейсхолдеры
+  placeholders:
+    _name: <player.name>
+    _message: <[rawMessage]>
+    _color: <[configType.color].parsed||<&[gray]>>
+  # Быстрые действия
+  shortcuts:
+    #inv: <player.inventory.map_slots>
+    dice: <list[⚀|⚁|⚂|⚃|⚄|⚅].random>
+    8ball: <list[<&[green]>[Да]|<&[red]>[Нет]|<&[gray]>[Возможно]].random><reset>
+    roll: <&[gray]>[<[randomCount]> из <[maxCount]>]<reset>
+    loc: <&hover[<player.location.format[XYZ: <&[red]>bx <&[green]>by <&[cyan]>bz]>]><&[green]>[Локация]<reset><&end_hover>
+  # Типы чата
+  types:
+    # Тип:
+    #   symbol: Символ
+    #   format: Формат
+    #   display: Название
+    #   targets: Цели
+    #   color: Цвет
+    local:
+      display: Локальный чат
+      targets: <player.location.find_players_within[10]>
+    global:
+      symbol: !
+      display: Глобальный чат
+      targets: <server.online_players>
+      color: <&[green]>
+    whisper:
+      symbol: ~
+      display: Прошептал
+      color: <&[cyan]>
+      format: _color • [Шепчет] &r_name _color» &r_message
+      targets: <player.location.find_players_within[2]>
+  format: _color • &r_name _color» &r_message
+  # Эмодзи
+  emojis: 😀 😃 😄 😁 😆 😅 🤣 😂 🙂 🙃 🫠 😉 😊 😇 🥰 😍 🤩 😘 😗 ☺ 😚 😙 🥲 😋 😛 😜 🤪 😝 🤑 🤗 🤭 🫢 🫣 🤫 🤔 🫡 🤐 🤨 😐 😑 😶 🫥 😏 😒 🙄 😬 🤥 🫨 😌 😔 😪 🤤 😴 🫩 😷 🤒 🤕 🤢 🤮 🤧 🥵 🥶 🥴 😵 🤯 🤠 🥳 🥸 😎 🤓 🧐 😕 🫤 😟 🙁 ☹ 😮 😯 😲 😳 🥺 🥹 😦 😧 😨 😰 😥 😢 😭 😱 😖 😣 😞 😓 😩 😫 🥱 😤 😡 😠 🤬 😈 👿 💀 ☠ 💩 🤡 👹 👺 👻 👽 👾 🤖 😺 😸 😹 😻 😼 😽 🙀 😿 😾 🙈 🙉 🙊 💌 💘 💝 💖 💗 💓 💞 💕 💟 ❣ 💔 ❤ 🩷 🧡 💛 💚 💙 🩵 💜 🤎 🖤 🩶 🤍 💋 💯 💢 💥 💫 💦 💨 🕳 💬 🗨 🗯 💭 💤 👋 🤚 🖐 ✋ 🖖 🫱 🫲 🫳 🫴 🫷 🫸 👌 🤌 🤏 ✌ 🤞 🫰 🤟 🤘 🤙 👈 👉 👆 🖕 👇 ☝ 🫵 👍 👎 ✊ 👊 🤛 🤜 👏 🙌 🫶 👐 🤲 🤝 🙏 ✍ 💅 🤳 💪 🦾 🦿 🦵 🦶 👂 🦻 👃 🧠 🫀 🫁 🦷 🦴 👀 👁 👅 👄 🫦 🗣 👤 👥 🫂 👪 👣 🫆 🦰 🦱 🦳 🦲 🐸 🐊 🐢 🦎 🐍 🐲 🐉 🦕 🦖 💐 🌸 💮 🪷 🏵 🌹 🥀 🌺 🌻 🌼 🌷 🪻 🍞 🥐 🥖 🫓 🥨 🥯 🥞 🧇 🧀 🍖 🍗 🥩 🥓 🍔 🍟 🍕 🌭 🥪 🌮 🌯 🫔 🥙 🧆 🥚 🍳 🥘 🍲 🫕 🥣 🥗 🍿 🧈 🧂 🥫 🎖 🏆 🏅 🥇 🥈 🥉 ⚽ ⚾ 🥎 🏀 🏐 🏈 🏉 🎾 🥏 🎳 🏏 🏑 🏒 🥍 🏓 🏸 🥊 🥋 🥅 ⛳ ⛸ 🎣 🤿 🎽 🎿 🛷 🥌 🎃 🎄 🎆 🎇 🧨 ✨ 🎈 🎉 🎊 🎋 🎍 🎎 🎏 🎐 🎑 🧧 🎀 🎁 🎗 🎟 🎫 🔴 🟠 🟡 🟢 🔵 🟣 🟤 ⚫ ⚪ 🟥 🟧 🟨 🟩 🟦 🟪 🟫 ⬛ ⬜ ◼ ◻ ◾ ◽ ▪ ▫ 🔶 🔷 🔸 🔹 🔺 🔻 💠 🔘 🔳 🔲 🏁 🚩 🎌 🏴 🏳
+  #
+  events:
+    on minecraft* command:
+      - determine cancelled
+    #
+    after player joins:
+      # Отображение всех эмодзи
+      - foreach <script.data_key[emojis].split> as:emoji:
+          - tablist add name:<&sp><[emoji]> skin_blob:<player.skin_blob> listed:false
+    #
+    on player chats:
+      - determine passively cancelled
+      - define rawMessage <context.message.strip_color.unaccented>
+      # Проверка на символы
+      - if <[rawMessage].regex_matches[[\sa-zA-Zа-яА-Я<script.data_key[emojis]>!-~]+].not>:
+          - narrate "<&[red]> Сучка, ты отправила недопустимый символ в этот чёртов чат"
+          - stop
+      # Проверка капса
+      - if <[rawMessage].to_list.filter[is_uppercase].size.div[<[rawMessage].length>].mul[100].round.is_more_than[50]> and <[rawMessage].length.is_more_than[5]>:
+          - narrate "<&[red]> Але, Долбоеб, меньше капса"
+          - stop
+      # Тип сообщение
+      - define messageType <script.data_key[types].filter_tag[<[filter_value.symbol].exists.not||true>].keys.first>
+      - foreach <script.data_key[types].filter_tag[<[filter_value.symbol].exists||false>]>:
+          - foreach next if:<[rawMessage].starts_with[<[value.symbol]>].not>
+          - define messageType <[key]>
+      - define configType <script.data_key[types.<[messageType]>]>
+      - define rawMessage <[rawMessage].after[<[configType.symbol]>]> if:<[configType.symbol].exists>
+      - stop if:<[rawMessage].length.equals[0]>
+      # Цель
+      - define targets <[configType.targets].parsed||<server.online_players>>
+      # Шорткаты
+      - ~run ChatPlaceholders def:<[rawMessage]> save:output
+      - define rawMessage <entry[output].created_queue.determination.first>
+      # Форматирование
+      - define formatConfig <[configType.format]||<script.data_key[format]>>
+      - define formattingMessage <[formatConfig].parse_color>
+      - foreach <script.data_key[placeholders]>:
+          - define formattingMessage <[formattingMessage].replace[<[key]>].with[<[value].parsed>]>
+      #
+      - narrate <[formattingMessage].on_hover[<&[gray]><util.time_now.to_zone[Europe/Moscow].format[dd.MM HH:mm]><&nl><[configType.display]||nil>].on_click[/pm <player.name> ].type[suggest_command]> targets:<[targets]>
+
+# @nenicadi
+
+ChatPlaceholders:
+  type: task
+  debug: false
+  definitions: rawMessage
+  script:
+    - define outputMessage <[rawMessage].split||<list>>
+    #
+    - foreach <script[ChatHandler].data_key[shortcuts]>:
+        # Сложные шорткаты
+        - choose <[key]>:
+            - case inv:
+                - clickable MimicHandler.task def:<[value].parsed> until:1m save:inventory_open
+                - define value <&click[<entry[inventory_open].command>]><&[green]>[Инвентарь]<&end_click>
+        # Замена
+        - foreach <[outputMessage].find_all_matches[^<[key]>*]> as:index:
+            # Неповторяющиеся сложные шорткаты
+            - choose <[key]>:
+                - case roll:
+                    - define maxCount <[outputMessage].get[<[index]>].split[<&co>].get[2].max[1].min[100]||100>
+                    - define randomCount <util.random.int[1].to[<[maxCount]>]>
+            #
+            - define outputMessage <[outputMessage].overwrite[<[value].parsed>].at[<[index]>]>
+    # Вывод
+    - determine <[outputMessage].space_separated||<[rawMessage]>>
+
+# @nenicadi
+
+FirstPersonSayCommand:
+  type: command
+  name: me
+  usage: /me
+  aliases:
+    - say
+    - minecraft:me
+    - minecraft:say
+  description: Написать от первого лица
+  tab completions:
+    1: Действие
+  script:
+    - narrate "<&hover[<&[gray]>Действие от 1-ого лица]> <&f>💬<&[cyan]> <player.name>: <&f><context.raw_args><&end_hover>" targets:<player.location.find_players_within[6]> if:<context.raw_args.length.is_more_than[0]>
+
+# @nenicadi

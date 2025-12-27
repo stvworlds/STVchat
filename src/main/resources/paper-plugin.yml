@@ -1,4 +1,7 @@
 name: STVchat
-version: '1.0-SNAPSHOT'
-main: net.maksim6opka.sTVchat.STVchat
+version: '1.0'
+main: net.maksim6opka.STVchat.Main
 api-version: '1.21'
+prefix: STVchat
+authors: [ Maksim6opka ]
+description: Private Stevious.xyz chat system
