@@ -38,15 +38,11 @@ public class ChatEvent implements Listener {
                 break;
             // Chat with 10 blocks radius
             case '~':
-                Bukkit.getScheduler().runTask(Main.getInstance(), () -> {
-                    MessageHandler.sendWhisperMsg(player, text);
-                });
+                Bukkit.getScheduler().runTask(Main.getInstance(), () -> MessageHandler.sendWhisperMsg(player, text));
                 break;
             //  Chat with 75 blocks radius
             default:
-                Bukkit.getScheduler().runTask(Main.getInstance(), () -> {
-                    MessageHandler.sendLocalMsg(player, text);
-                });
+                Bukkit.getScheduler().runTask(Main.getInstance(), () -> MessageHandler.sendLocalMsg(player, text));
         }
 
         event.setCancelled(true);
