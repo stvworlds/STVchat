@@ -18,7 +18,7 @@ ChatHandler:
     dice: <list[⚀|⚁|⚂|⚃|⚄|⚅].random>
     8ball: <list[<&[green]>[Да]|<&[red]>[Нет]|<&[gray]>[Возможно]].random><reset>
     roll: <&[gray]>[<[randomCount]> из <[maxCount]>]<reset>
-    loc: <&hover[<player.location.format[XYZ: <&[red]>bx <&[green]>by <&[cyan]>bz]>]><&[green]>[Локация]<reset><&end_hover>
+    #loc: <&hover[<player.location.format[XYZ: <&[red]>bx <&[green]>by <&[cyan]>bz]>]><&[green]>[Локация]<reset><&end_hover>
   # Типы чата
   types:
     # Тип:
