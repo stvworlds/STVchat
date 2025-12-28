@@ -25,9 +25,9 @@ public class PlayerAvatarUrl {
             String randomSkin = DEFAULT_SKINS.get(
                     RANDOM.nextInt(DEFAULT_SKINS.size())
             );
-            return "https://vzge.me/bust/512/" + randomSkin + "?y=-20";
+            return "https://vzge.me/bust/512/" + randomSkin + "?y=-40";
         }
 
-        return "https://vzge.me/bust/512/" + textureId + "?y=-20";
+        return "https://vzge.me/bust/512/" + textureId + "?y=-40";
     }
 }

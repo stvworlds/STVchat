@@ -1,12 +1,15 @@
 package net.maksim6opka.STVchat.handlers;
 
+import me.clip.placeholderapi.PlaceholderAPI;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.event.ClickEvent;
 import net.kyori.adventure.text.event.HoverEvent;
 import net.kyori.adventure.text.format.TextColor;
 
 import net.kyori.adventure.text.format.TextDecoration;
+import net.maksim6opka.STVchat.Main;
 import org.bukkit.Bukkit;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
 import java.time.ZoneId;
@@ -15,13 +18,19 @@ import java.time.format.DateTimeFormatter;
 
 public class MessageHandler {
 
-    private static final Component PLAYERINFO = Component.text("Натисни, щоб надіслати повідомлення")
-                                                .append(Component.newline())
-                                                .append(Component.newline())
-                                                .append(Component.text("☠ ⏸ %statistic_DEATHS%"))
-                                                .append(Component.newline())
-                                                .append(Component.text("⌚ ⏸ %statistic_hours_played%г.")
-    );
+    private static Component playerInfo(Player player, String color) {
+        return Component.text("Натисни, ")
+                .color(TextColor.fromHexString("#AAAAAA"))
+                .append(Component.text("щоб надіслати повідомлення.")
+                        .color(TextColor.fromHexString(color))
+                )
+                .append(Component.newline())
+                .append(Component.newline())
+                .append(Component.text("☠ ⏸ " + PlaceholderAPI.setPlaceholders(player, "%statistic_DEATHS%")))
+                .append(Component.newline())
+                .append(Component.text("⌚ ⏸ " + PlaceholderAPI.setPlaceholders(player, "%statistic_hours_played%г.")))
+        ;
+    }
 
 
     public static Component time() {
@@ -31,64 +40,108 @@ public class MessageHandler {
         );
     }
 
+    public static Component copyMsg(String color) {
+        return Component.text("✎")
+                .color(TextColor.fromHexString(color))
+
+                .append(Component.text("Натисни, ")
+                        .color(TextColor.fromHexString("#AAAAAA"))
+                )
+
+                .append(Component.text("щоб скопіювати.")
+                    .color(TextColor.fromHexString(color))
+                )
+        ;
+    }
 
 
     public static void sendGlobalMsg(Player player, String message) {
 
-        Component finalMessage = Component.text("♦ ")
+        Main plugin = Main.getPlugin(Main.class);
+        FileConfiguration config = plugin.getConfig();
+
+
+        String rawMessage = message.isEmpty() ? message : message.substring(1);
+
+
+        Component finalMessage = Component.text("★ ")
                 .color(TextColor.fromHexString("#fe7eff"))
                 .hoverEvent(HoverEvent.showText(time()))
 
                 .append(Component.text(player.getName())
                         .color(TextColor.fromHexString("#aaaaaa"))
                         .clickEvent(ClickEvent.suggestCommand("/msg " + player.getName() + " "))
-                        .hoverEvent(HoverEvent.showText(MessageHandler.PLAYERINFO))
+                        .hoverEvent(HoverEvent.showText(playerInfo(player, "#fe7eff")))
                 )
 
                 .append(Component.text(" • ")
-                        .color(TextColor.fromHexString("#aaaaaa"))
+                        .color(TextColor.fromHexString("#fe7eff"))
+                        .hoverEvent(HoverEvent.showText(Component.text("Глобальний чат")))
                 )
 
-                .append(Component.text(message)
+                .append(Component.text(rawMessage)
                         .color(TextColor.fromHexString("#aaaaaa"))
-                        .decorate(TextDecoration.ITALIC)
                         .clickEvent(ClickEvent.copyToClipboard(message))
-                        .hoverEvent(HoverEvent.showText(Component.text("Натисніть, щоб скопіювати")))
+                        .hoverEvent(HoverEvent.showText(copyMsg("#fe7eff")))
 
                 );
-        String url = "https://discord.com/api/webhooks/1443851902470197430/GIT1Zy73GWzWDo9O_y4-vpDJuwCMes80uvVGaESJk7UmHsYuv4w2rEJ5QBdcwS8BiXE6";
-        WebhookGlobalChat.send(url, message, PlayerAvatarUrl.getAvatarUrl(player), player.getName());
+
         Bukkit.broadcast(finalMessage);
+        WebhookGlobalChat.send(config.getString("webhook"), rawMessage, PlayerAvatarUrl.getAvatarUrl(player), player.getName());
 
     }
     public static void sendServerMsg(Player player, String message) {
-        Bukkit.broadcast(
-                Component.text(player.getName())
-                        .append(Component.text(" • " + message))
 
-        );
-    }
-    public static void sendWhisperMsg(Player player, String message) {
+        String rawMessage = message.isEmpty() ? message : message.substring(1);
 
-        Component finalMessage = Component.text("♦ ")
-                .color(TextColor.fromHexString("#fe7eff"))
+        Component finalMessage = Component.text("☁ ")
+                .color(TextColor.fromHexString("#FAEDCB"))
                 .hoverEvent(HoverEvent.showText(time()))
 
                 .append(Component.text(player.getName())
-                        .color(TextColor.fromHexString("#aaaaaa"))
+                        .color(TextColor.fromHexString("#C9E4DE"))
                         .clickEvent(ClickEvent.suggestCommand("/msg " + player.getName() + " "))
-                        .hoverEvent(HoverEvent.showText(MessageHandler.PLAYERINFO))
+                        .hoverEvent(HoverEvent.showText(playerInfo(player, "#FAEDCB")))
                 )
 
                 .append(Component.text(" • ")
-                        .color(TextColor.fromHexString("#aaaaaa"))
+                        .color(TextColor.fromHexString("#FAEDCB"))
+                        .hoverEvent(HoverEvent.showText(Component.text("Серверний чат")))
                 )
 
-                .append(Component.text(message)
-                        .color(TextColor.fromHexString("#aaaaaa"))
-                        .decorate(TextDecoration.ITALIC)
+                .append(Component.text(rawMessage)
+                        .color(TextColor.fromHexString("#C9E4DE"))
                         .clickEvent(ClickEvent.copyToClipboard(message))
-                        .hoverEvent(HoverEvent.showText(Component.text("Натисніть, щоб скопіювати")))
+                        .hoverEvent(HoverEvent.showText(copyMsg("#FAEDCB")))
+
+                );
+
+        Bukkit.broadcast(finalMessage);
+    }
+    public static void sendWhisperMsg(Player player, String message) {
+
+        String rawMessage = message.isEmpty() ? message : message.substring(1);
+
+        Component finalMessage = Component.text("✉ ")
+                .color(TextColor.fromHexString("#9863E7"))
+                .hoverEvent(HoverEvent.showText(time()))
+
+                .append(Component.text(player.getName())
+                        .color(TextColor.fromHexString("#C6DEF1"))
+                        .clickEvent(ClickEvent.suggestCommand("/msg " + player.getName() + " "))
+                        .hoverEvent(HoverEvent.showText(playerInfo(player, "#9863E7")))
+                )
+
+                .append(Component.text(" • ")
+                        .color(TextColor.fromHexString("#9863E7"))
+                        .hoverEvent(HoverEvent.showText(Component.text("Шепотіння")))
+                )
+
+                .append(Component.text(rawMessage)
+                        .decorate(TextDecoration.ITALIC)
+                        .color(TextColor.fromHexString("#C6DEF1"))
+                        .clickEvent(ClickEvent.copyToClipboard(message))
+                        .hoverEvent(HoverEvent.showText(copyMsg("#9863E7")))
 
                 );
 
@@ -102,24 +155,25 @@ public class MessageHandler {
     }
     public static void sendLocalMsg(Player player, String message) {
 
-        Component finalMessage = Component.text("♦ ")
-                .color(TextColor.fromHexString("#fe7eff"))
+        Component finalMessage = Component.text("⚐ ")
+                .color(TextColor.fromHexString("#C8F1C6"))
                 .hoverEvent(HoverEvent.showText(time()))
 
                 .append(Component.text(player.getName())
-                        .color(TextColor.fromHexString("#aaaaaa"))
+                        .color(TextColor.fromHexString("#A7C1A5"))
                         .clickEvent(ClickEvent.suggestCommand("/msg " + player.getName() + " "))
-                        .hoverEvent(HoverEvent.showText(MessageHandler.PLAYERINFO))
+                        .hoverEvent(HoverEvent.showText(playerInfo(player, "#C8F1C6")))
                 )
 
                 .append(Component.text(" • ")
-                        .color(TextColor.fromHexString("#aaaaaa"))
+                        .color(TextColor.fromHexString("#C8F1C6"))
+                        .hoverEvent(HoverEvent.showText(Component.text("Локальний чат")))
                 )
 
                 .append(Component.text(message)
-                        .color(TextColor.fromHexString("#aaaaaa"))
+                        .color(TextColor.fromHexString("#A7C1A5"))
                         .clickEvent(ClickEvent.copyToClipboard(message))
-                        .hoverEvent(HoverEvent.showText(Component.text("Натисніть, щоб скопіювати")))
+                        .hoverEvent(HoverEvent.showText(copyMsg("#C8F1C6")))
 
                 );
 
