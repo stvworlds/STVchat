@@ -1,5 +1,6 @@
 package net.maksim6opka.STVchat;
 
+import net.maksim6opka.STVchat.commands.PluginCommands;
 import net.maksim6opka.STVchat.events.ChatEvent;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -16,6 +17,9 @@ public final class Main extends JavaPlugin {
         pm.registerEvents(new ChatEvent(), this);
 
         saveDefaultConfig();
+
+        PluginCommands reloadCommand = new PluginCommands(this);
+        reloadCommand.registerPluginCommands();
 
         getLogger().info("Plugin enabled");
     }

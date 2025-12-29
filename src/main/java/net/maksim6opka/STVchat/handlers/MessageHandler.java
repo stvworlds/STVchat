@@ -7,9 +7,6 @@ import net.kyori.adventure.text.event.HoverEvent;
 import net.kyori.adventure.text.format.TextColor;
 
 import net.kyori.adventure.text.format.TextDecoration;
-import net.maksim6opka.STVchat.Main;
-import org.bukkit.Bukkit;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
 import java.time.ZoneId;
@@ -25,8 +22,6 @@ public class MessageHandler {
                         .color(TextColor.fromHexString(color))
                 )
                 .append(Component.newline())
-                .append(Component.newline())
-                .append(Component.text("☠ ⏸ " + PlaceholderAPI.setPlaceholders(player, "%statistic_DEATHS%")))
                 .append(Component.newline())
                 .append(Component.text("⌚ ⏸ " + PlaceholderAPI.setPlaceholders(player, "%statistic_hours_played%г.")))
         ;
@@ -55,69 +50,6 @@ public class MessageHandler {
     }
 
 
-    public static void sendGlobalMsg(Player player, String message) {
-
-        Main plugin = Main.getPlugin(Main.class);
-        FileConfiguration config = plugin.getConfig();
-
-
-        String rawMessage = message.isEmpty() ? message : message.substring(1);
-
-
-        Component finalMessage = Component.text("★ ")
-                .color(TextColor.fromHexString("#fe7eff"))
-                .hoverEvent(HoverEvent.showText(time()))
-
-                .append(Component.text(player.getName())
-                        .color(TextColor.fromHexString("#aaaaaa"))
-                        .clickEvent(ClickEvent.suggestCommand("/msg " + player.getName() + " "))
-                        .hoverEvent(HoverEvent.showText(playerInfo(player, "#fe7eff")))
-                )
-
-                .append(Component.text(" • ")
-                        .color(TextColor.fromHexString("#fe7eff"))
-                        .hoverEvent(HoverEvent.showText(Component.text("Глобальний чат")))
-                )
-
-                .append(Component.text(rawMessage)
-                        .color(TextColor.fromHexString("#aaaaaa"))
-                        .clickEvent(ClickEvent.copyToClipboard(message))
-                        .hoverEvent(HoverEvent.showText(copyMsg("#fe7eff")))
-
-                );
-
-        Bukkit.broadcast(finalMessage);
-        WebhookGlobalChat.send(config.getString("webhook"), rawMessage, PlayerAvatarUrl.getAvatarUrl(player), player.getName());
-
-    }
-    public static void sendServerMsg(Player player, String message) {
-
-        String rawMessage = message.isEmpty() ? message : message.substring(1);
-
-        Component finalMessage = Component.text("☁ ")
-                .color(TextColor.fromHexString("#FAEDCB"))
-                .hoverEvent(HoverEvent.showText(time()))
-
-                .append(Component.text(player.getName())
-                        .color(TextColor.fromHexString("#C9E4DE"))
-                        .clickEvent(ClickEvent.suggestCommand("/msg " + player.getName() + " "))
-                        .hoverEvent(HoverEvent.showText(playerInfo(player, "#FAEDCB")))
-                )
-
-                .append(Component.text(" • ")
-                        .color(TextColor.fromHexString("#FAEDCB"))
-                        .hoverEvent(HoverEvent.showText(Component.text("Серверний чат")))
-                )
-
-                .append(Component.text(rawMessage)
-                        .color(TextColor.fromHexString("#C9E4DE"))
-                        .clickEvent(ClickEvent.copyToClipboard(message))
-                        .hoverEvent(HoverEvent.showText(copyMsg("#FAEDCB")))
-
-                );
-
-        Bukkit.broadcast(finalMessage);
-    }
     public static void sendWhisperMsg(Player player, String message) {
 
         String rawMessage = message.isEmpty() ? message : message.substring(1);

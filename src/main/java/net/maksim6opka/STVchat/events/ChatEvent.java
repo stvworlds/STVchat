@@ -28,15 +28,6 @@ public class ChatEvent implements Listener {
         char firstChar = text.charAt(0);
 
         switch (firstChar) {
-            // Global chat
-            case '!':
-                MessageHandler.sendGlobalMsg(player, text);
-                break;
-            // One server chat
-            case '#':
-                MessageHandler.sendServerMsg(player, text);
-                break;
-            // Chat with 10 blocks radius
             case '~':
                 Bukkit.getScheduler().runTask(Main.getInstance(), () -> MessageHandler.sendWhisperMsg(player, text));
                 break;
