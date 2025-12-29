@@ -41,7 +41,7 @@ public class MessageHandler {
     }
 
     public static Component copyMsg(String color) {
-        return Component.text("✎")
+        return Component.text("✎ ")
                 .color(TextColor.fromHexString(color))
 
                 .append(Component.text("Натисни, ")
