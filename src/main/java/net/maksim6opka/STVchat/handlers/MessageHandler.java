@@ -7,6 +7,7 @@ import net.kyori.adventure.text.event.HoverEvent;
 import net.kyori.adventure.text.format.TextColor;
 
 import net.kyori.adventure.text.format.TextDecoration;
+import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.maksim6opka.STVchat.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -29,18 +30,18 @@ public class MessageHandler {
                 .append(Component.text("☠ ⏸ " + PlaceholderAPI.setPlaceholders(player, "%statistic_DEATHS%")))
                 .append(Component.newline())
                 .append(Component.text("⌚ ⏸ " + PlaceholderAPI.setPlaceholders(player, "%statistic_hours_played%г.")))
-        ;
+                ;
     }
 
 
-    public static Component time() {
+    private static Component time() {
         return Component.text(
                 ZonedDateTime.now(ZoneId.of("Europe/Kyiv"))
                         .format(DateTimeFormatter.ofPattern("HH:mm:ss"))
         );
     }
 
-    public static Component copyMsg(String color) {
+    private static Component copyMsg(String color) {
         return Component.text("✎ ")
                 .color(TextColor.fromHexString(color))
 
@@ -49,11 +50,16 @@ public class MessageHandler {
                 )
 
                 .append(Component.text("щоб скопіювати.")
-                    .color(TextColor.fromHexString(color))
+                        .color(TextColor.fromHexString(color))
                 )
-        ;
+                ;
     }
 
+
+    private static Component parseMsg(String message) {
+        Component parsed = MiniMessage.miniMessage().deserialize(message);
+        return parsed;
+    }
 
     public static void sendGlobalMsg(Player player, String message) {
 
@@ -79,7 +85,7 @@ public class MessageHandler {
                         .hoverEvent(HoverEvent.showText(Component.text("Глобальний чат")))
                 )
 
-                .append(Component.text(rawMessage)
+                .append(parseMsg(rawMessage)
                         .color(TextColor.fromHexString("#aaaaaa"))
                         .clickEvent(ClickEvent.copyToClipboard(message))
                         .hoverEvent(HoverEvent.showText(copyMsg("#fe7eff")))
@@ -109,7 +115,7 @@ public class MessageHandler {
                         .hoverEvent(HoverEvent.showText(Component.text("Серверний чат")))
                 )
 
-                .append(Component.text(rawMessage)
+                .append(parseMsg(rawMessage)
                         .color(TextColor.fromHexString("#C9E4DE"))
                         .clickEvent(ClickEvent.copyToClipboard(message))
                         .hoverEvent(HoverEvent.showText(copyMsg("#FAEDCB")))
@@ -137,7 +143,7 @@ public class MessageHandler {
                         .hoverEvent(HoverEvent.showText(Component.text("Шепотіння")))
                 )
 
-                .append(Component.text(rawMessage)
+                .append(parseMsg(rawMessage)
                         .decorate(TextDecoration.ITALIC)
                         .color(TextColor.fromHexString("#C6DEF1"))
                         .clickEvent(ClickEvent.copyToClipboard(message))
@@ -170,7 +176,7 @@ public class MessageHandler {
                         .hoverEvent(HoverEvent.showText(Component.text("Локальний чат")))
                 )
 
-                .append(Component.text(message)
+                .append(parseMsg(message)
                         .color(TextColor.fromHexString("#A7C1A5"))
                         .clickEvent(ClickEvent.copyToClipboard(message))
                         .hoverEvent(HoverEvent.showText(copyMsg("#C8F1C6")))
