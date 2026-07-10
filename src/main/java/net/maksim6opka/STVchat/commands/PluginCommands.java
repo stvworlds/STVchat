@@ -21,7 +21,7 @@ public class PluginCommands {
 
                                 var sender = ctx.getSource().getSender();
 
-                                sender.sendMessage("§a Private chat system for Stevious.zyx, created by Maksim6opka");
+                                sender.sendMessage("§a Private chat system for Stevious, created by Maksim6opka");
                                 return 1;
                             } )
                             .then(Commands.literal("reload")

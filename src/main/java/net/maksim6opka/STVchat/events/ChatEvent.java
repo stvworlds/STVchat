@@ -28,8 +28,8 @@ public class ChatEvent implements Listener {
         char firstChar = text.charAt(0);
 
         switch (firstChar) {
-            case '~':
-                Bukkit.getScheduler().runTask(Main.getInstance(), () -> MessageHandler.sendWhisperMsg(player, text));
+            case '!':
+                Bukkit.getScheduler().runTask(Main.getInstance(), () -> MessageHandler.sendGlobalMsg(player, text));
                 break;
             //  Chat with 75 blocks radius
             default:
