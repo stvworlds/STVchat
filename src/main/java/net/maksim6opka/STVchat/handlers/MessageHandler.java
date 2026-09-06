@@ -6,7 +6,6 @@ import net.kyori.adventure.text.event.ClickEvent;
 import net.kyori.adventure.text.event.HoverEvent;
 import net.kyori.adventure.text.format.TextColor;
 
-import net.kyori.adventure.text.format.TextDecoration;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.maksim6opka.STVchat.Main;
 import org.bukkit.Bukkit;
@@ -20,17 +19,21 @@ import java.time.format.DateTimeFormatter;
 public class MessageHandler {
 
     private static Component playerInfo(Player player, String color) {
-        return Component.text("Натисни, ")
-                .color(TextColor.fromHexString("#AAAAAA"))
-                .append(Component.text("щоб надіслати повідомлення.")
-                        .color(TextColor.fromHexString(color))
-                )
+        return Component.empty()
+                .append(Component.text("✎ ").color(TextColor.fromHexString(color)))
+                .append(Component.text("Натисни, ").color(TextColor.fromHexString("#AAAAAA")))
+                .append(Component.text("щоб надіслати повідомлення.").color(TextColor.fromHexString(color)))
                 .append(Component.newline())
                 .append(Component.newline())
-                .append(Component.text("☠ ⏸ " + PlaceholderAPI.setPlaceholders(player, "%statistic_DEATHS%")))
+                .append(Component.text("☠ ⏸ " + PlaceholderAPI.setPlaceholders(player, "%statistic_DEATHS%"))
+                        .color(TextColor.fromHexString("#AAAAAA")))
                 .append(Component.newline())
-                .append(Component.text("⌚ ⏸ " + PlaceholderAPI.setPlaceholders(player, "%statistic_hours_played%г.")))
-                ;
+                .append(Component.text("⌚ ⏸ " + PlaceholderAPI.setPlaceholders(player, "%statistic_hours_played%") + "г.")
+                        .color(TextColor.fromHexString("#AAAAAA")))
+                .append(Component.newline())
+                .append(Component.text("ds ⏸ @" + PlaceholderAPI.setPlaceholders(player, "%stv_user_discord_username%"))
+                        .color(TextColor.fromHexString("#AAAAAA")));
+
     }
 
 
@@ -144,8 +147,7 @@ public class MessageHandler {
                 )
 
                 .append(parseMsg(rawMessage)
-                        .decorate(TextDecoration.ITALIC)
-                        .color(TextColor.fromHexString("#C6DEF1"))
+                        .color(TextColor.fromHexString("#FFFFFF"))
                         .clickEvent(ClickEvent.copyToClipboard(message))
                         .hoverEvent(HoverEvent.showText(copyMsg("#9863E7")))
 
