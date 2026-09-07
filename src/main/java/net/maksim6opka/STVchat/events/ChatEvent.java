@@ -4,6 +4,7 @@ package net.maksim6opka.STVchat.events;
 import io.papermc.paper.event.player.AsyncChatEvent;
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import net.maksim6opka.STVchat.Main;
+import net.maksim6opka.STVchat.handlers.GlobalMessage;
 import net.maksim6opka.STVchat.handlers.MessageHandler;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -30,7 +31,7 @@ public class ChatEvent implements Listener {
         switch (firstChar) {
             // Global chat
             case '!':
-                MessageHandler.sendGlobalMsg(player, text);
+                GlobalMessage.sendGlobalMsg(player, text);
                 break;
             // One server chat
             case '#':

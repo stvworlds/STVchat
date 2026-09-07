@@ -18,7 +18,7 @@ import java.time.format.DateTimeFormatter;
 
 public class MessageHandler {
 
-    private static Component playerInfo(Player player, String color) {
+    public static Component playerInfo(Player player, String color) {
         return Component.empty()
                 .append(Component.text("✎ ").color(TextColor.fromHexString(color)))
                 .append(Component.text("Натисни, ").color(TextColor.fromHexString("#AAAAAA")))
@@ -37,14 +37,14 @@ public class MessageHandler {
     }
 
 
-    private static Component time() {
+    public static Component time() {
         return Component.text(
                 ZonedDateTime.now(ZoneId.of("Europe/Kyiv"))
                         .format(DateTimeFormatter.ofPattern("HH:mm:ss"))
         );
     }
 
-    private static Component copyMsg(String color) {
+    public static Component copyMsg(String color) {
         return Component.text("✎ ")
                 .color(TextColor.fromHexString(color))
 
@@ -59,46 +59,11 @@ public class MessageHandler {
     }
 
 
-    private static Component parseMsg(String message) {
-        Component parsed = MiniMessage.miniMessage().deserialize(message);
-        return parsed;
+    public static Component parseMsg(String message) {
+        return MiniMessage.miniMessage().deserialize(message);
     }
 
-    public static void sendGlobalMsg(Player player, String message) {
 
-        Main plugin = Main.getPlugin(Main.class);
-        FileConfiguration config = plugin.getConfig();
-
-
-        String rawMessage = message.isEmpty() ? message : message.substring(1);
-
-
-        Component finalMessage = Component.text("★ ")
-                .color(TextColor.fromHexString("#fe7eff"))
-                .hoverEvent(HoverEvent.showText(time()))
-
-                .append(Component.text(player.getName())
-                        .color(TextColor.fromHexString("#aaaaaa"))
-                        .clickEvent(ClickEvent.suggestCommand("/msg " + player.getName() + " "))
-                        .hoverEvent(HoverEvent.showText(playerInfo(player, "#fe7eff")))
-                )
-
-                .append(Component.text(" • ")
-                        .color(TextColor.fromHexString("#fe7eff"))
-                        .hoverEvent(HoverEvent.showText(Component.text("Глобальний чат")))
-                )
-
-                .append(parseMsg(rawMessage)
-                        .color(TextColor.fromHexString("#aaaaaa"))
-                        .clickEvent(ClickEvent.copyToClipboard(message))
-                        .hoverEvent(HoverEvent.showText(copyMsg("#fe7eff")))
-
-                );
-
-        Bukkit.broadcast(finalMessage);
-        WebhookGlobalChat.send(config.getString("webhook"), rawMessage, PlayerAvatarUrl.getAvatarUrl(player), player.getName());
-
-    }
     public static void sendServerMsg(Player player, String message) {
 
         String rawMessage = message.isEmpty() ? message : message.substring(1);
