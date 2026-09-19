@@ -7,9 +7,7 @@ import net.kyori.adventure.text.event.HoverEvent;
 import net.kyori.adventure.text.format.TextColor;
 
 import net.kyori.adventure.text.minimessage.MiniMessage;
-import net.maksim6opka.STVchat.Main;
 import org.bukkit.Bukkit;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
 import java.time.ZoneId;

@@ -41,6 +41,13 @@ public class ChatEvent implements Listener {
             case '~':
                 Bukkit.getScheduler().runTask(Main.getInstance(), () -> MessageHandler.sendWhisperMsg(player, text));
                 break;
+            // Admin chat
+            case '.':
+                if (!player.hasPermission("stv.admin")) {
+                    Bukkit.getScheduler().runTask(Main.getInstance(), () -> MessageHandler.sendLocalMsg(player, text));
+                    break;
+                }
+                break;
             //  Chat with 75 blocks radius
             default:
                 Bukkit.getScheduler().runTask(Main.getInstance(), () -> MessageHandler.sendLocalMsg(player, text));
